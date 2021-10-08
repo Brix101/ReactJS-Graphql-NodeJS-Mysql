@@ -14,10 +14,10 @@ function CreateUser() {
     console.log({ Error: error });
   }
   if (data) {
-    console.log(data.createUser.message);
+    console.log({ message: data.createUser.message });
   }
 
-  const onsubmit = () => {
+  const onsubmit = (): void => {
     createUser({
       variables: { name: name, username: username, password: password },
     });
