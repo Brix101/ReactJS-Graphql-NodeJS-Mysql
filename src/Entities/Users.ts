@@ -1,4 +1,4 @@
-import { BaseEntity, BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import * as bcrypt from "bcrypt";
 
 @Entity()
@@ -9,15 +9,22 @@ export class Users extends BaseEntity {
     @Column()
     name!: string;
 
-    @Column()
+    @Column({unique:true})
     username!: string;
 
     @Column()
     password!: string;
 
-    @BeforeInsert()  
+    @BeforeInsert()
+    @BeforeUpdate()  
     async hashPassword() {
         this.password = await bcrypt.hash(this.password, 10);  
+    }
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    lowerCaseUsername(){
+        this.username = this.username.toLowerCase();
     }
 
 }
