@@ -71,6 +71,7 @@ export const UPDATE_PASSWORD = {
 
         user.password = newPassword
 
-        return await user.save();
+        await user.save();
+        return { success: true, message: "Password Updated", statusCode: 200};
     }
 }
