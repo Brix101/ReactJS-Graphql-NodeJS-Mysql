@@ -1,12 +1,11 @@
-import { GraphQLID, GraphQLString } from "graphql";
+import {  GraphQLString } from "graphql";
 import { UserType } from "../TypeDefs/User";
 import { Users } from "../../Entities/Users"
-import { resolve } from "path";
-import { Message } from "../../Interfaces/Message";
 import { comparePasswords } from "../../Utils/comparePass";
+import { MessageType } from "../TypeDefs/Message";
 
 export const CREATE_USER = {
-    type: UserType,
+    type: MessageType,
     args: { // args = req.body
         name:{type: GraphQLString},
         username:{type: GraphQLString},
@@ -17,58 +16,57 @@ export const CREATE_USER = {
 
         const isUser = await Users.findOne({where:{username}});
         if(isUser){
-            throw new Error("Username Taken");
+            return { success: false, message: "Username Taken", statusCode: 400};
         }
         
         const user = Users.create({ name, username , password });
-        
-        return await Users.save(user);
+
+        await Users.save(user);
+
+        return { success: false, message: "User Created", statusCode: 200};
+
     }
 }
 
 export const DELETE_USER = {
-    type: UserType,
+    type: MessageType,
     args: {
         id : { type: GraphQLString }
     },
     async resolve(parent: any, args: any) {
         const {id} = args;
-        try {
-            const user = Users.findOne(id);
+        const user = Users.findOne(id);
 
-            if(!user){
-                await Users.delete(user);
-                return { success: true,
-                    message:`User ${id} Deleted`,
-                    statusCode: 200
-                    };
-            }else{
-                return { success: false, message: "User Not Found", statusCode: 400};
-            }
-        } catch (error) {
-            throw new Error("User Not Found");
+        if(!user){
+            await Users.delete(user);
+            return { success: true,
+                message:`User ${id} Deleted`,
+                statusCode: 200
+                };
+        }else{
+            return { success: false, message: "User Not Found", statusCode: 400};
         }
     }
 }
 
 export const UPDATE_PASSWORD = {
-    type: UserType,
+    type: MessageType,
     args: {
         username:{type: GraphQLString},
         oldPassword:{type: GraphQLString},
         newPassword:{type: GraphQLString},
     },
-    async resolve(parent: any, args: any): Promise<Users>{
+    async resolve(parent: any, args: any){
         const { username, oldPassword, newPassword } = args;
         const user = await Users.findOne({where :{username}})
 
         if (!user) {
-            throw new Error("User Not Found");   
+            return { success: false, message: "User Not Found", statusCode: 400}; 
         }
         const isEqual = await comparePasswords(user.password,oldPassword);
 
         if(!isEqual){
-            throw new Error("Old Password is Incorrect");
+            return { success: false, message: "Password Not Equal", statusCode: 400};
         }
 
         user.password = newPassword
