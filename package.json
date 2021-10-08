@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./dist/index.ts",
-    "dev:windows": "nodemon ./src/index.ts",
+    "dev": "nodemon ./src/index.ts",
     "dev:wsl": "CHOKIDAR_USEPOLLING=true nodemon ./src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc -p"
