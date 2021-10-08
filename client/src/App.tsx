@@ -1,11 +1,18 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import "./App.css";
+import CreateUser from "./Components/CreateUser";
 
 function App() {
+  const client = new ApolloClient({
+    uri: "http://localhost:5000/graphql",
+    cache: new InMemoryCache(),
+  });
+
   return (
-    <div className="App">
-      <h1 className="sample">Hello World</h1>
-    </div>
+    <ApolloProvider client={client}>
+      <CreateUser />
+    </ApolloProvider>
   );
 }
 

@@ -28,8 +28,8 @@ const main = async () => {
         graphiql: true,
     }))
 
-    app.listen(8000, ()=>{
-        console.log("Server Running on Port 8000")
+    app.listen(5000, ()=>{
+        console.log("Server Running on Port 5000")
     })
     
 }

@@ -1,1 +1,0 @@
-# Typescript-NodeJS-Graphql-Mysql
