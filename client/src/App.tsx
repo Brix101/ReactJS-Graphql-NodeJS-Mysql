@@ -2,6 +2,7 @@ import React from "react";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import "./App.css";
 import CreateUser from "./Components/CreateUser";
+import UserList from "./Components/UserList";
 
 function App() {
   const client = new ApolloClient({
@@ -12,6 +13,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <CreateUser />
+      <UserList />
     </ApolloProvider>
   );
 }

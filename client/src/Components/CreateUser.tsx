@@ -17,41 +17,41 @@ function CreateUser() {
     console.log(data.createUser.message);
   }
 
+  const onsubmit = () => {
+    createUser({
+      variables: { name: name, username: username, password: password },
+    });
+  };
+
   return (
     <div className="createUser">
-      <input
-        type="text"
-        placeholder="name"
-        onChange={(e) => {
-          setName(e.target.value);
-        }}
-      />
+      <form onSubmit={onsubmit}>
+        <input
+          type="text"
+          placeholder="name"
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
+        />
 
-      <input
-        type="text"
-        placeholder="username"
-        onChange={(e) => {
-          setUsername(e.target.value);
-        }}
-      />
+        <input
+          type="text"
+          placeholder="username"
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
+        />
 
-      <input
-        type="text"
-        placeholder="password"
-        onChange={(e) => {
-          setPassword(e.target.value);
-        }}
-      />
+        <input
+          type="text"
+          placeholder="password"
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+        />
 
-      <button
-        onClick={() =>
-          createUser({
-            variables: { name: name, username: username, password: password },
-          })
-        }
-      >
-        Create User
-      </button>
+        <button type="submit">Create User</button>
+      </form>
     </div>
   );
 }
