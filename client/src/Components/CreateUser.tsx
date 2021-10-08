@@ -13,45 +13,41 @@ function CreateUser() {
   if (error) {
     console.log({ Error: error });
   }
-  if (data) {
-    console.log({ message: data.createUser.message });
-  }
 
   const onsubmit = (): void => {
     createUser({
       variables: { name: name, username: username, password: password },
     });
+    window.location.reload();
   };
 
   return (
     <div className="createUser">
-      <form onSubmit={onsubmit}>
-        <input
-          type="text"
-          placeholder="name"
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
-        />
+      <input
+        type="text"
+        placeholder="name"
+        onChange={(e) => {
+          setName(e.target.value);
+        }}
+      />
 
-        <input
-          type="text"
-          placeholder="username"
-          onChange={(e) => {
-            setUsername(e.target.value);
-          }}
-        />
+      <input
+        type="text"
+        placeholder="username"
+        onChange={(e) => {
+          setUsername(e.target.value);
+        }}
+      />
 
-        <input
-          type="text"
-          placeholder="password"
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
+      <input
+        type="text"
+        placeholder="password"
+        onChange={(e) => {
+          setPassword(e.target.value);
+        }}
+      />
 
-        <button type="submit">Create User</button>
-      </form>
+      <button onClick={onsubmit}>Create User</button>
     </div>
   );
 }

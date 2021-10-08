@@ -24,7 +24,7 @@ export const CREATE_USER = {
 
     await Users.save(user);
 
-    return { success: false, message: "User Created", statusCode: 200 };
+    return { success: true, message: "User Created", statusCode: 200 };
   },
 };
 

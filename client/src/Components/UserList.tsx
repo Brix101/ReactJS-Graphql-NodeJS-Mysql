@@ -7,13 +7,13 @@ import { DELETE_USER } from "../Graphql/Mutation/User";
 const UserList = () => {
   const { data } = useQuery(GET_ALL_USERS);
 
-  const [deleteUser, removeUser] = useMutation(DELETE_USER);
+  const [deleteUser, response] = useMutation(DELETE_USER);
 
-  if (removeUser.error) {
-    console.log(removeUser.error);
+  if (response.error) {
+    console.log(response.error);
   }
-  if (removeUser.data) {
-    console.log(removeUser.data);
+  if (response.data) {
+    console.log(response.data);
   }
 
   return (
@@ -27,8 +27,8 @@ const UserList = () => {
                   {user.name} / {user.username}{" "}
                   <button
                     onClick={() => {
-                      console.log(user.id);
                       deleteUser({ variables: { id: user.id } });
+                      window.location.reload();
                     }}
                   >
                     Delete
